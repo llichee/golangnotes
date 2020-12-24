@@ -28,7 +28,7 @@ func main() {
 	// 5. 注册模型（事先定义好结构体）
 	// 6. 操作（增删改查）
 	orm.Debug = true
-	dsn := "beegouser:abc123456@tcp(118.190.201.236:3306)/ormdata?parseTime=true&loc=Local&charset=utf8mb4"
+	dsn := "beegouser:abc123456@tcp(xxx.xxx.xxx.xxx:3306)/ormdata?parseTime=true&loc=Local&charset=utf8mb4"
 	// 注册驱动
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	// 注册数据库配置信息
