@@ -19,6 +19,20 @@ type User struct {
 	DeletedAt *time.Time `orm:"null"`
 }
 
+// 指定表名
+func (u *User) TableName() string {
+	return "a1"
+}
+
+// 指定索引名
+func (u *User) TableIndex() [][]string {
+	return  [][]string{
+		{"Name"},
+		{"Password"},
+		{"Tel", "Addr"},
+	}
+}
+
 func main() {
 	// 主要步骤：
 	// 1.导入驱动（初始化）
