@@ -1,0 +1,43 @@
+package main
+
+import (
+	"github.com/astaxie/beego/orm"
+	"log"
+	"time"
+	_ "github.com/astaxie/beego/orm"
+)
+
+type User struct {
+	Id int64 `orm:"column(uid);pk;auto"`
+	Name string `orm:"size(64);"`
+	Password string `orm:"size(1024)"`
+	Tel string `orm:"size(32);"`
+	Addr string `orm:"type(text)"`
+	Birthday *time.Time `orm:"type(date)"`
+	CreatedAt *time.Time `orm:"auto_now_add"`
+	UpdatedAt *time.Time `orm:"auto_now"`
+	DeletedAt *time.Time `orm:"null"`
+}
+
+func main() {
+	// 主要步骤：
+	// 1.导入驱动（初始化）
+	// 2. 导入orm包
+	// 3. 注册驱动
+	// 4. 注册数据库配置信息
+	// 5. 注册模型（事先定义好结构体）
+	// 6. 操作（增删改查）
+	orm.Debug = true
+	dsn := "beegouser:abc123456@tcp(118.190.201.236:3306)/ormdata?parseTime=true&loc=Local&charset=utf8mb4"
+	// 注册驱动
+	orm.RegisterDriver("mysql", orm.DRMySQL)
+	// 注册数据库配置信息
+	if err := orm.RegisterDataBase("default","mysql",dsn); err != nil {
+		log.Fatal(err)
+	}
+	// 注册模型
+	orm.RegisterModel(&User{}) // 指针类型的实例
+
+	// 操作
+	orm.RunSyncdb("default", true, true)  // 同步数据库
+}
